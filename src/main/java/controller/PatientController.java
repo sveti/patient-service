@@ -89,6 +89,24 @@ public class PatientController {
         return new ModelAndView("redirect:/" + username);
     }
 
+    @RequestMapping(value = "/delete/{username}", method = RequestMethod.GET)
+    public ModelAndView delete(@PathVariable("username") String username) {
+
+        Patient patient= patientService.getPatient(username);
+        patientService.deletePatient(patient.getId());
+
+
+        return new ModelAndView("redirect:/successfullyDeleted");
+
+    }
+
+    @RequestMapping("/successfullyDeleted")
+    public ModelAndView successfullyDeleted() {
+
+        ModelAndView mav = new ModelAndView("successfullyDeleted");
+        return mav;
+
+    }
 
 
 }

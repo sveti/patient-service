@@ -63,5 +63,11 @@ public class PatientService {
         return endCalendar.before(startCalendar);
     }
 
+    public void deletePatient(Long id){
+        final String uri = "http://localhost:8082/api/patient/delete/" + id;
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.delete(uri,id);
+
+    }
 
 }
