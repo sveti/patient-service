@@ -10,24 +10,30 @@ public class Doctor implements Serializable {
 
     private String name; // User's full name
 
+    private String password;
 
     private String medicalSpeciality;
 
     private boolean isGp;
+
+    private String roles;
+
+    private int active;
 
 
     public Doctor() {
     }
 
 
-    public Doctor(Long id, String username, String name, String medicalSpeciality, boolean isGp) {
+    public Doctor(Long id, String username, String name, String password, String medicalSpeciality, boolean isGp, String roles, int active) {
         this.id = id;
         this.username = username;
         this.name = name;
-
+        this.password = password;
         this.medicalSpeciality = medicalSpeciality;
         this.isGp = isGp;
-
+        this.roles = roles;
+        this.active = active;
     }
 
     public Long getId() {
@@ -54,6 +60,13 @@ public class Doctor implements Serializable {
         this.name = name;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getMedicalSpeciality() {
         return medicalSpeciality;
@@ -71,6 +84,21 @@ public class Doctor implements Serializable {
         isGp = gp;
     }
 
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String role) {
+        this.roles = role;
+    }
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
 
     @Override
     public String toString() {
@@ -78,8 +106,10 @@ public class Doctor implements Serializable {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
                 ", medicalSpeciality='" + medicalSpeciality + '\'' +
                 ", isGp=" + isGp +
+                ", roles='" + roles + '\'' +
                 '}';
     }
 }

@@ -9,22 +9,25 @@ public class Patient implements Serializable {
 
     private Long id;
     private String username; // will retrieve the DB for user with such EGN as Id
+    private String password;
     private String name;
     private Date healthInsuranceDate;
     private boolean isHealthInsured;
     private Date dateOfChangedGp;
     private Doctor doctorGp;
-    private List<Appointment> appointments;
+    private List<Appointment> appointments = new ArrayList<>();
 
+    public Patient() {
+    }
 
-    public Patient(){}
-
-    public Patient(String username, String name,
-                   Date healthInsuranceDate, boolean isHealthInsured, Doctor doctorGp,List<Appointment> appointments) {
+    public Patient(Long id, String username, String password, String name, Date healthInsuranceDate, boolean isHealthInsured, Date dateOfChangedGp, Doctor doctorGp, List<Appointment> appointments) {
+        this.id = id;
         this.username = username;
+        this.password = password;
         this.name = name;
         this.healthInsuranceDate = healthInsuranceDate;
         this.isHealthInsured = isHealthInsured;
+        this.dateOfChangedGp = dateOfChangedGp;
         this.doctorGp = doctorGp;
         this.appointments = appointments;
     }
@@ -46,6 +49,13 @@ public class Patient implements Serializable {
         this.username = username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getName() {
         return name;
@@ -100,6 +110,7 @@ public class Patient implements Serializable {
         return "Patient{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", healthInsuranceDate=" + healthInsuranceDate +
                 ", isHealthInsured=" + isHealthInsured +
