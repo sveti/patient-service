@@ -25,6 +25,7 @@ public class PatientController {
     public ModelAndView index(@PathVariable("username") String username) {
 
         ModelAndView mav = new ModelAndView("index");
+        mav.addObject("username",username);
         mav.addObject("patient", patientService.getPatient(username));
         return mav;
 
@@ -38,7 +39,7 @@ public class PatientController {
 
         boolean changeGP = patientService.isWithinMonths(patient.getDateOfChangedGp());
 
-
+        mav.addObject("username",username);
         mav.addObject("showChangeGP",changeGP);
         mav.addObject("patient", patient);
         mav.addObject("patientUsername",username);
@@ -112,7 +113,8 @@ public class PatientController {
     @RequestMapping("/appointments/{username}")
     public ModelAndView appointments(@PathVariable("username") String username){
 
-        List<Appointment> appointments = appointmentService.getAppointments(username);
+        List<Appointment> appointments = appointmentService.getUnfinishedAppointments(username);
+
         ModelAndView mav = new ModelAndView("appointments");
 
         boolean hasAppointments = !(appointments.isEmpty());
@@ -163,6 +165,21 @@ public class PatientController {
         mav.addObject("appointment",appointment);
         mav.addObject("username",username);
 
+
+        return mav;
+    }
+
+    @RequestMapping("/pastAppointments/{username}")
+    public ModelAndView pastAppointments(@PathVariable("username") String username){
+
+        List<Appointment> appointments = appointmentService.getPastAppointments(username);
+        ModelAndView mav = new ModelAndView("pastAppointments");
+
+        boolean hasAppointments = !(appointments.isEmpty());
+
+        mav.addObject("hasAppointments",hasAppointments);
+        mav.addObject("appointments",appointments);
+        mav.addObject("username",username);
 
         return mav;
     }

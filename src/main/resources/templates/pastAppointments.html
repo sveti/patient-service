@@ -48,14 +48,13 @@
     </div>
 </nav>
 
-
 <!-- Header -->
 <header class="bg-primary py-5 mb-5 banner">
     <div class="container h-100 ">
         <div class="row h-100 align-items-center ">
             <div class="col-lg-12 ">
-                <h1 class="display-4 text-white mt-5 mb-2">Appointment</h1>
-                <p class="lead mb-5 text-white-50">Here you can see the selected appointment</p>
+                <h1 class="display-4 text-white mt-5 mb-2">Book Appointment</h1>
+                <p class="lead mb-5 text-white-50">Here you can book an appointment</p>
             </div>
         </div>
     </div>
@@ -65,66 +64,46 @@
 <div class="container">
 
     <div class="row">
-
-        <div class="col-6">
-
-            <p>Diagnosis</p>
-
-        </div>
-        <div class="col-6">
-            <p th:text="${appointment.diagnosis}"></p>
-
-        </div>
-
-    </div>
-
-    <div class="row">
-
-        <div class="col-6">
-
-            <p>Medication</p>
-
-        </div>
-        <div class="col-6">
-            <p th:text="${appointment.medication}"></p>
-
-        </div>
-
-    </div>
-
-    <div class="row">
-
-        <div class="col-6">
-
-            <p>Sick leave start Date</p>
-
-        </div>
-        <div class="col-6">
-            <p th:text="${appointment.sickLeaveStartDate}"></p>
-
-        </div>
-
-    </div>
-    <div class="row">
-
-        <div class="col-6">
-
-            <p>Sick leave duration</p>
-
-        </div>
-        <div class="col-6">
-            <p th:text="${appointment.sickLeaveDays}"></p>
-
-        </div>
-
-    </div>
-    <div class="row">
-
         <div class="col-12">
-            <a th:href="'/pastAppointments/' + ${username}" class="btn btn-lg btn-warning mt-3">« Back</a>
+            <table th:if="${hasAppointments}" class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">Date</th>
+                    <th scope="col">Doctor</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <th:block th:each="appointment : ${appointments}">
+                    <tr>
+                        <td th:text="${appointment.dateOfAppointment}"></td>
+                        <td th:text="${appointment.doctor.name}"></td>
+                        <td >
+                            Done
+                        </td>
+
+                        <td>
+                            <a th:href="@{'/seeappointment/' +${username}+ '/' + ${appointment.getId()}}" class="btn btn-lg btn-warning mt-3">See results &raquo;</a>
+                        </td>
+                    </tr>
+                </th:block>
+
+                </tbody>
+            </table>
+            <div th:unless="${hasAppointments}" class="alert alert-warning" role="alert">
+                You have no past appointments
+            </div>
         </div>
     </div>
+    <!-- /.row -->
+    <div class="row my-3">
+        <div class="col-12">
+            <a th:href="@{'/addAppointment/' + ${username}}" class="btn btn-lg btn-warning mt-3">Make an appointment &raquo;</a>
 
+        </div>
+    </div>
 </div>
 <!-- /.container -->
 
