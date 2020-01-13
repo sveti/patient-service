@@ -147,8 +147,6 @@ public class PatientController {
         appointment.setDoctor(patientService.getDoctor(appointmentModelAndView.getDoctorUsername()));
         appointment.setDiagnosis("NOTSET");
         appointment.setDateOfAppointment(new Date());
-        appointment.setDoctorusername(patientService.getDoctor(appointmentModelAndView.getDoctorUsername()).getUsername());
-        appointment.setPatientusername(username);
 
         appointmentService.addAppointment(appointment);
 

@@ -30,17 +30,6 @@ public class Doctor implements Serializable {
     public Doctor() {
     }
 
-//
-//    public Doctor(Long id, String username, String name, String password, String medicalSpeciality, boolean isGp, String roles, int active) {
-//        this.id = id;
-//        this.username = username;
-//        this.name = name;
-//        this.password = password;
-//        this.medicalSpeciality = medicalSpeciality;
-//        this.isGp = isGp;
-//        this.roles = roles;
-//        this.active = active;
-//    }
 
     public Doctor(Long id, String username, String name, String password, String medicalSpeciality, boolean isGp, String roles, int active, List<Patient> patients, List<Appointment> appointments) {
         this.id = id;

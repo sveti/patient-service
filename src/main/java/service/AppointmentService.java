@@ -23,8 +23,8 @@ public class AppointmentService {
 
         Appointment appointment = webClientBuilder.build().get().uri("http://db-producer/api/appointment/" + id).retrieve().bodyToMono(Appointment.class).block();
 
-        Patient patient = webClientBuilder.build().get().uri("http://db-producer/api/patient/username/"+appointment.getPatientusername()).retrieve().bodyToMono(Patient.class).block();
-        Doctor doctor = webClientBuilder.build().get().uri("http://db-producer/api/doctor/username/" + appointment.getDoctorusername()).retrieve().bodyToMono(Doctor.class).block();
+        Patient patient = webClientBuilder.build().get().uri("http://db-producer/api/patient/findByAppointment/"+id).retrieve().bodyToMono(Patient.class).block();
+        Doctor doctor = webClientBuilder.build().get().uri("http://db-producer/api/doctor/findByAppointment/" +id).retrieve().bodyToMono(Doctor.class).block();
 
         appointment.setDoctor(doctor);
         appointment.setPatient(patient);
@@ -45,6 +45,8 @@ public class AppointmentService {
 
         Appointment[] appointments = webClientBuilder.build().get().uri("http://db-producer/api/appointment/appointments/patient/"+ username).retrieve().bodyToMono(Appointment[].class).block();
         List<Appointment> appointmentList= Arrays.asList(appointments);
+
+
 
 
         return  appointmentList;
