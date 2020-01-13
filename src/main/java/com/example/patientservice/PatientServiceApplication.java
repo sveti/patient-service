@@ -9,11 +9,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
+import service.AppointmentService;
 import service.PatientService;
 
 
 @ComponentScan(basePackageClasses = PatientController.class)
 @ComponentScan(basePackageClasses = PatientService.class)
+@ComponentScan(basePackageClasses = AppointmentService.class)
 @EnableEurekaClient
 @SpringBootApplication
 public class PatientServiceApplication {

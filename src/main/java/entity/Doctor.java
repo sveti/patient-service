@@ -1,6 +1,8 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Doctor implements Serializable {
 
@@ -20,12 +22,27 @@ public class Doctor implements Serializable {
 
     private int active;
 
+    private List<Patient> patients = new ArrayList<>();
+    private List<Appointment> appointments = new ArrayList<>();
+
+
 
     public Doctor() {
     }
 
+//
+//    public Doctor(Long id, String username, String name, String password, String medicalSpeciality, boolean isGp, String roles, int active) {
+//        this.id = id;
+//        this.username = username;
+//        this.name = name;
+//        this.password = password;
+//        this.medicalSpeciality = medicalSpeciality;
+//        this.isGp = isGp;
+//        this.roles = roles;
+//        this.active = active;
+//    }
 
-    public Doctor(Long id, String username, String name, String password, String medicalSpeciality, boolean isGp, String roles, int active) {
+    public Doctor(Long id, String username, String name, String password, String medicalSpeciality, boolean isGp, String roles, int active, List<Patient> patients, List<Appointment> appointments) {
         this.id = id;
         this.username = username;
         this.name = name;
@@ -34,6 +51,8 @@ public class Doctor implements Serializable {
         this.isGp = isGp;
         this.roles = roles;
         this.active = active;
+        this.patients = patients;
+        this.appointments = appointments;
     }
 
     public Long getId() {
@@ -98,6 +117,22 @@ public class Doctor implements Serializable {
 
     public void setActive(int active) {
         this.active = active;
+    }
+
+    public List<Patient> getPatients() {
+        return patients;
+    }
+
+    public void setPatients(List<Patient> patients) {
+        this.patients = patients;
+    }
+
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
     }
 
     @Override

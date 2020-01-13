@@ -1,12 +1,11 @@
 package controller;
 
-import entity.Doctor;
-import entity.DoctorModelAndView;
-import entity.Patient;
+import entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
+import service.AppointmentService;
 import service.PatientService;
 
 import java.util.Date;
@@ -18,6 +17,9 @@ public class PatientController {
 
     @Autowired
     PatientService patientService;
+
+    @Autowired
+    AppointmentService appointmentService;
 
     @RequestMapping("/{username}")
     public ModelAndView index(@PathVariable("username") String username) {
@@ -107,6 +109,63 @@ public class PatientController {
         return mav;
 
     }
+    @RequestMapping("/appointments/{username}")
+    public ModelAndView appointments(@PathVariable("username") String username){
+
+        List<Appointment> appointments = appointmentService.getAppointments(username);
+        ModelAndView mav = new ModelAndView("appointments");
+
+        boolean hasAppointments = !(appointments.isEmpty());
+
+        mav.addObject("hasAppointments",hasAppointments);
+        mav.addObject("appointments",appointments);
+        mav.addObject("username",username);
+
+        return mav;
+    }
+
+    @RequestMapping("/addAppointment/{username}")
+    public ModelAndView addAppointment(@PathVariable("username") String username){
+
+        List<Doctor> doctors = patientService.getDoctors();
+        AppointmentModelAndView appointmentModelAndView = new AppointmentModelAndView();
 
 
+
+        ModelAndView mav = new ModelAndView("addAppointment");
+        mav.addObject("doctors",doctors);
+        mav.addObject("appointmentModelAndView",appointmentModelAndView);
+        mav.addObject("username",username);
+        return mav;
+
+    }
+    @RequestMapping("/makeAppointment/{username}")
+    public ModelAndView makeAppointment(@PathVariable("username")String username,@ModelAttribute("appointmentModelAndView") AppointmentModelAndView appointmentModelAndView){
+
+        Appointment appointment = new Appointment();
+        appointment.setPatient(patientService.getPatient(username));
+        appointment.setDoctor(patientService.getDoctor(appointmentModelAndView.getDoctorUsername()));
+        appointment.setDiagnosis("NOTSET");
+        appointment.setDateOfAppointment(new Date());
+        appointment.setDoctorusername(patientService.getDoctor(appointmentModelAndView.getDoctorUsername()).getUsername());
+        appointment.setPatientusername(username);
+
+        appointmentService.addAppointment(appointment);
+
+        return new ModelAndView("redirect:/appointments/" + username);
+    }
+
+    @RequestMapping("/seeappointment/{username}/{id}")
+    public ModelAndView seeappointment(@PathVariable("username")String username,
+                                       @PathVariable("id") Long id) {
+
+        Appointment appointment = appointmentService.getAppointmentByID(id);
+
+        ModelAndView mav = new ModelAndView("seeAppointment");
+        mav.addObject("appointment",appointment);
+        mav.addObject("username",username);
+
+
+        return mav;
+    }
 }

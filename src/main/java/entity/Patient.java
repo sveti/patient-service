@@ -15,6 +15,8 @@ public class Patient implements Serializable {
     private boolean isHealthInsured;
     private Date dateOfChangedGp;
     private Doctor doctorGp;
+
+
     private List<Appointment> appointments = new ArrayList<>();
 
     public Patient() {

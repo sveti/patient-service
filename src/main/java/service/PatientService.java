@@ -1,5 +1,6 @@
 package service;
 
+import entity.Appointment;
 import entity.Doctor;
 import entity.Patient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class PatientService {
@@ -69,5 +67,7 @@ public class PatientService {
         restTemplate.delete(uri,id);
 
     }
+
+
 
 }

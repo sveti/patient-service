@@ -14,7 +14,7 @@
     <title>Patient Dashboard</title>
 
     <!-- Bootstrap core CSS -->
-    <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.css}" >
 
     <!-- Custom styles for this template -->
     <link rel="stylesheet" th:href="@{/css/style.css}">
@@ -60,8 +60,8 @@
             <div class="container h-100 ">
                 <div class="row h-100 align-items-center ">
                     <div class="col-lg-12 ">
-                        <h1 class="display-4 text-white mt-5 mb-2">Your Appointments</h1>
-                        <p class="lead mb-5 text-white-50">Here you can find all your appointments and start an examination</p>
+                        <h1 class="display-4 text-white mt-5 mb-2">Book Appointment</h1>
+                        <p class="lead mb-5 text-white-50">Here you can book an appointment</p>
                     </div>
                 </div>
             </div>
@@ -72,36 +72,52 @@
 
             <div class="row">
                 <div class="col-12">
-
-                    <table class="table table-hover">
+                    <table th:if="${hasAppointments}" class="table table-hover">
                         <thead>
-                            <tr>
-                                <th scope="col">Name of Patient</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Start examination</th>
-                            </tr>
+                        <tr>
+                            <th scope="col">Date</th>
+<!--                            <th scope="col">Doctor</th>-->
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
                         </thead>
                         <tbody>
+
+                        <th:block th:each="appointment : ${appointments}">
                             <tr>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td><a class="btn accent-orange" href="edit.html">Go &raquo;</a></td>
+                                <td th:text="${appointment.dateOfAppointment}"></td>
+<!--                                <td th:text="${appointment.doctor.name}"></td>-->
+
+                                <td th:if='${appointment.diagnosis=="NOTSET"}'>
+                                    Awaiting
+                                </td>
+                                <td th:unless='${appointment.diagnosis=="NOTSET"}'>
+                                    Done
+                                </td>
+
+                                <td th:if='${appointment.diagnosis=="NOTSET"}'>
+                                    Not available
+                                </td>
+                                <td th:unless='${appointment.diagnosis=="NOTSET"}'>
+                                    <a th:href="@{'/seeappointment/' +${username}+ '/' + ${appointment.getId()}}" class="btn btn-lg btn-warning mt-3">See results &raquo;</a>
+                                </td>
                             </tr>
-                            <tr>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td><a class="btn accent-orange" href="edit.html">Go &raquo;</a></td>
-                            </tr>
-                            <tr>
-                                <td>Larry the Bird</td>
-                                <td>Larry the Bird</td>
-                                <td><a class="btn accent-orange" href="edit.html">Go &raquo;</a></td>
-                            </tr>
+                        </th:block>
+
                         </tbody>
                     </table>
+                    <div th:unless="${hasAppointments}" class="alert alert-warning" role="alert">
+                        You have no appointments
+                    </div>
                 </div>
             </div>
             <!-- /.row -->
+            <div class="row my-3">
+                <div class="col-12">
+                    <a th:href="@{'/addAppointment/' + ${username}}" class="btn btn-lg btn-warning mt-3">Make an appointment &raquo;</a>
+
+                </div>
+            </div>
         </div>
         <!-- /.container -->
 
