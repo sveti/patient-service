@@ -50,12 +50,15 @@ public class PatientController {
     @RequestMapping(value = "/update/{username}", method = RequestMethod.POST)
     public ModelAndView update(@PathVariable("username") String username, @ModelAttribute Patient patient) {
 
-
         Patient newPatient= patientService.getPatient(username);
+
 
         if(!patient.getName().equals(newPatient.getName())){
             newPatient.setName(patient.getName());
         }
+
+
+
         patientService.updatePatient(newPatient);
         return new ModelAndView("redirect:/" + username);
 

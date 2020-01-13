@@ -17,6 +17,9 @@ public class PatientService {
     @Autowired
     private WebClient.Builder webClientBuilder;
 
+    @Autowired
+    private AppointmentService appointmentService;
+
     public Doctor getDoctor(String username){
         Doctor doctor = webClientBuilder.build().get().uri("http://db-producer/api/doctor/username/" + username).retrieve().bodyToMono(Doctor.class).block();
         return doctor;
@@ -34,6 +37,10 @@ public class PatientService {
         Patient patient = webClientBuilder.build().get().uri("http://db-producer/api/patient/username/" + username).retrieve().bodyToMono(Patient.class).block();
         Doctor doctor =  webClientBuilder.build().get().uri("http://db-producer/api/patient/" + username+"/doctor").retrieve().bodyToMono(Doctor.class).block();
         patient.setDoctorGp(doctor);
+
+        List<Appointment> app = appointmentService.getAppointments(username);
+        patient.setAppointments(app);
+
         return patient;
     }
 
