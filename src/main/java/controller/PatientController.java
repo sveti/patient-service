@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 import service.AppointmentService;
 import service.PatientService;
 
+import javax.jws.WebParam;
 import java.util.Date;
 import java.util.List;
 
@@ -23,13 +24,31 @@ public class PatientController {
 
     @RequestMapping("/{username}")
     public ModelAndView index(@PathVariable("username") String username) {
+        //if (patientService.getAuthToken(username)){
+        Patient p = patientService.getPatient(username);
 
-        ModelAndView mav = new ModelAndView("index");
-        mav.addObject("username",username);
-        mav.addObject("patient", patientService.getPatient(username));
-        return mav;
+        if (p.getActive() == 1){
+            ModelAndView mav = new ModelAndView("index");
+            mav.addObject("username",username);
+            mav.addObject("patient", p);
+            return mav;
+        }
+        return new ModelAndView("redirect:/deletedProfile");
+        //}
 
+        //return new ModelAndView("redirect:/accessDenied");
     }
+
+    @RequestMapping("/accessDenied")
+    public ModelAndView accessDenied(){
+        return new ModelAndView("accessDenied");
+    }
+
+    @RequestMapping("/deletedProfile")
+    public ModelAndView deletedProfile(){
+        return new ModelAndView("deletedProfile");
+    }
+
     @RequestMapping("/edit/{username}")
     public ModelAndView edit(@PathVariable("username") String username) {
 

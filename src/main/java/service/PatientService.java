@@ -54,8 +54,8 @@ public class PatientService {
 
     }
 
-    public static boolean isWithinMonths(Date endDate) {
-
+    public boolean isWithinMonths(Date endDate) {
+        System.out.println("end date:" + endDate);
         Calendar startCalendar = Calendar.getInstance();
         startCalendar.setTime(new Date());
 
@@ -72,7 +72,16 @@ public class PatientService {
         final String uri = "http://localhost:8082/api/patient/delete/" + id;
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(uri,id);
+    }
 
+    public boolean getAuthToken(String username){
+        RestTemplate r = new RestTemplate();
+        //String uri = "http://localhost:8082/api/doctor/getToken/" + username;
+        //ResponseEntity<String> authTOken = r.getForEntity(uri, String.class);
+        //System.out.println("auth token: "+ authTOken.getBody().trim());
+        String authTOken = webClientBuilder.build().get().uri("http://db-producer/api/patient/getToken/" + username).retrieve().bodyToMono(String.class).block();
+        System.out.println(authTOken + " token");
+        return authTOken != null;
     }
 
 

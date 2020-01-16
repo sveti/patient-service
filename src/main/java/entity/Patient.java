@@ -15,6 +15,7 @@ public class Patient implements Serializable {
     private boolean isHealthInsured;
     private Date dateOfChangedGp;
     private Doctor doctorGp;
+    private int active;
 
 
     private List<Appointment> appointments = new ArrayList<>();
@@ -22,7 +23,10 @@ public class Patient implements Serializable {
     public Patient() {
     }
 
-    public Patient(Long id, String username, String password, String name, Date healthInsuranceDate, boolean isHealthInsured, Date dateOfChangedGp, Doctor doctorGp, List<Appointment> appointments) {
+
+
+    public Patient(Long id, String username, String password, String name, Date healthInsuranceDate,
+          boolean isHealthInsured, Date dateOfChangedGp, Doctor doctorGp, int active, List<Appointment> appointments) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -31,9 +35,9 @@ public class Patient implements Serializable {
         this.isHealthInsured = isHealthInsured;
         this.dateOfChangedGp = dateOfChangedGp;
         this.doctorGp = doctorGp;
+        this.active = active;
         this.appointments = appointments;
     }
-
 
     public Long getId() {
         return id;
@@ -107,6 +111,14 @@ public class Patient implements Serializable {
         this.appointments = appointments;
     }
 
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
     @Override
     public String toString() {
         return "Patient{" +
@@ -121,4 +133,5 @@ public class Patient implements Serializable {
                 ", appointments=" + appointments +
                 '}';
     }
+
 }
